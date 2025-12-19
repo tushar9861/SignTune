@@ -238,6 +238,48 @@
   }
 }
 
+/* New Keyframes */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tilt {
+  0%,
+  100% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+  }
+}
+
+@keyframes rotateGlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
 .animate-waveform {
   animation: waveform 0.8s ease-in-out infinite;
 }
@@ -277,6 +319,19 @@
 /* Added new animation for gradient text */
 .animate-gradient {
   animation: gradient 8s ease infinite;
+}
+
+/* New Animation Classes */
+.animate-slide-in-up {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.animate-tilt {
+  animation: tilt 6s ease-in-out infinite;
+}
+
+.animate-rotate-glow {
+  animation: rotateGlow 20s linear infinite;
 }
 
 /* Added delay utilities for staggered animations */
@@ -339,4 +394,63 @@
 
 .card-glow:hover::before {
   opacity: 1;
+}
+
+/* Enhanced hover effects with accent-light */
+.hover-lift-accent {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift-accent:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 40px rgba(34, 211, 238, 0.3);
+}
+
+/* Accent glow effect */
+.accent-glow {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+}
+
+.accent-glow:hover {
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.4), 0 0 60px rgba(34, 211, 238, 0.2);
+}
+
+/* Parallax container */
+.parallax-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  transition: transform 0.3s ease-out;
+}
+
+/* Form field animations */
+.form-field-animated {
+  transition: all 0.3s ease;
+}
+
+.form-field-animated:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 211, 238, 0.2);
+}
+
+/* Button wave effect */
+.button-wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-wave::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.button-wave:active::after {
+  animation: wave 0.6s ease-out;
 }

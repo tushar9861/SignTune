@@ -10,6 +10,7 @@ import { HowItWorksPreview } from "@/components/home/how-it-works-preview"
 import { CTASection } from "@/components/home/cta-section"
 import { CustomTuneForm } from "@/components/home/custom-tune-form"
 import { FloatingContact } from "@/components/floating-contact"
+import { TryMySoundPanel } from "@/components/try-my-sound-panel"
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
         <GlobalSoundMap />
         <SoundPhilosophyQuote />
         <FeaturedAudio />
+        <TryMySoundPanel />
         <WhySignTune />
         <WhoItsFor />
         <HowItWorksPreview />
