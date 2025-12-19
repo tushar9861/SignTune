@@ -2,6 +2,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { WalkmanWave } from "@/components/about/walkman-wave"
 import { Music, Target, Heart, Award } from "lucide-react"
+import Image from "next/image"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -42,8 +43,16 @@ export default function AboutPage() {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-transparent to-transparent">
-          <div className="container mx-auto px-4">
+        <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-transparent to-transparent relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/professional-audio-engineer-in-modern-music-record.jpg"
+              alt="About Us Background"
+              fill
+              className="object-cover opacity-15"
+            />
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">About The Sign Tune</h1>
               <p className="text-lg text-muted-foreground">
@@ -59,25 +68,33 @@ export default function AboutPage() {
         <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="bg-card border border-border rounded-lg p-8 md:p-10">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Our Story</h2>
-                <div className="space-y-4 text-muted-foreground leading-relaxed">
-                  <p>
-                    Welcome to The Sign Tune, where we transform ordinary phone calls into memorable experiences. In a
-                    world where first impressions matter, your caller tune speaks before you do. We recognized the power
-                    of audio branding and the need for truly personalized caller tunes that go beyond generic options.
-                  </p>
-                  <p>
-                    Founded with a passion for audio excellence and personalization, The Sign Tune brings together
-                    professional composers, voice artists, and audio engineers to create custom caller tunes that truly
-                    represent your identity. Whether you're an individual looking to stand out or a business seeking to
-                    strengthen your brand, we craft the perfect sound identity for you.
-                  </p>
-                  <p>
-                    Our commitment to originality means we never use copyrighted music or generic templates. Every tune
-                    is composed from scratch, tailored to your specific requirements, mood, and occasion. This ensures
-                    you receive a completely unique audio signature that's professionally produced and ready to use.
-                  </p>
+              <div className="bg-card border border-border rounded-lg overflow-hidden">
+                <div className="relative h-64 md:h-80">
+                  <Image src="/modern-sound-wave-visualization-with-music-notes--.jpg" alt="Our Story" fill className="object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                </div>
+                <div className="p-8 md:p-10">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Our Story</h2>
+                  <div className="space-y-4 text-muted-foreground leading-relaxed">
+                    <p>
+                      Welcome to The Sign Tune, where we transform ordinary phone calls into memorable experiences. In a
+                      world where first impressions matter, your caller tune speaks before you do. We recognized the
+                      power of audio branding and the need for truly personalized caller tunes that go beyond generic
+                      options.
+                    </p>
+                    <p>
+                      Founded with a passion for audio excellence and personalization, The Sign Tune brings together
+                      professional composers, voice artists, and audio engineers to create custom caller tunes that
+                      truly represent your identity. Whether you're an individual looking to stand out or a business
+                      seeking to strengthen your brand, we craft the perfect sound identity for you.
+                    </p>
+                    <p>
+                      Our commitment to originality means we never use copyrighted music or generic templates. Every
+                      tune is composed from scratch, tailored to your specific requirements, mood, and occasion. This
+                      ensures you receive a completely unique audio signature that's professionally produced and ready
+                      to use.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

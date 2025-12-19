@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { sendToWhatsApp } from "@/lib/whatsapp"
 import { CheckCircle, Package, MessageCircle } from "lucide-react"
+import Image from "next/image"
 
 export default function BookYourTunePage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -83,8 +84,17 @@ export default function BookYourTunePage() {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-transparent to-transparent">
-          <div className="container mx-auto px-4">
+        <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-transparent to-transparent relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/booking-form-on-tablet-with-music-notes-floating.jpg"
+              alt="Book Your Tune Background"
+              fill
+              className="object-cover opacity-10"
+            />
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Book Your Tune</h1>
               <p className="text-lg text-muted-foreground">

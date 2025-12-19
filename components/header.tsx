@@ -11,6 +11,7 @@ export function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/new-collections", label: "New Collections" },
+    { href: "/musicians", label: "Musicians" },
     { href: "/how-it-works", label: "How It Works" },
     { href: "/packages", label: "Packages" },
     { href: "/book-your-tune", label: "Book Your Tune" },

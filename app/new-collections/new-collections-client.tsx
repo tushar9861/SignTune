@@ -6,6 +6,7 @@ import { AudioPlayer } from "@/components/audio-player"
 import { SignatureStamp } from "@/components/collections/signature-stamp"
 import { SoundWaveArt } from "@/components/vector-art/sound-wave-art"
 import { MusicalInstrumentArt } from "@/components/vector-art/musical-instrument-art"
+import Image from "next/image"
 
 export default function NewCollectionsPageClient() {
   const tunes = [
@@ -59,7 +60,15 @@ export default function NewCollectionsPageClient() {
       <main>
         {/* Hero Section */}
         <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-transparent to-transparent relative overflow-hidden">
-          {/* <CHANGE> Add animated vector art background */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/music-collection-library-with-vinyl-records-and-d.jpg"
+              alt="Music Collection Background"
+              fill
+              className="object-cover opacity-15"
+            />
+          </div>
+
           <div className="absolute inset-0 opacity-5 pointer-events-none">
             <SoundWaveArt className="absolute top-0 left-0 w-full h-32 animate-wave-flow" />
             <SoundWaveArt

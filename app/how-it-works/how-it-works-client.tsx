@@ -8,6 +8,7 @@ import { SoundWaveIcon } from "@/components/vector-graphics/sound-wave-icon"
 import { Button } from "@/components/ui/button"
 import { ComingSoonModal } from "@/components/coming-soon-modal"
 import { SoundWaveArt } from "@/components/vector-art/sound-wave-art"
+import Image from "next/image"
 
 export default function HowItWorksClient() {
   const [showModal, setShowModal] = useState(false)
@@ -54,6 +55,15 @@ export default function HowItWorksClient() {
       <Header />
       <main>
         <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-transparent to-transparent relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/step-by-step-workflow-visualization-with-music-p.jpg"
+              alt="How It Works Background"
+              fill
+              className="object-cover opacity-10"
+            />
+          </div>
+
           <div className="absolute top-10 right-10 opacity-20 animate-float">
             <SoundWaveIcon className="w-32 h-32" />
           </div>
@@ -61,7 +71,6 @@ export default function HowItWorksClient() {
             <SoundWaveIcon className="w-24 h-24" />
           </div>
 
-          {/* <CHANGE> Add animated sound wave art */}
           <div className="absolute inset-0 opacity-5 pointer-events-none">
             <SoundWaveArt className="w-full h-full" />
           </div>
@@ -126,7 +135,6 @@ export default function HowItWorksClient() {
                 Choose a package and create your unique caller tune today
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                {/* <CHANGE> Add modal triggers */}
                 <Button size="lg" onClick={() => setShowModal(true)}>
                   View Packages
                 </Button>
@@ -140,7 +148,6 @@ export default function HowItWorksClient() {
       </main>
       <Footer />
 
-      {/* <CHANGE> Add coming soon modal */}
       <ComingSoonModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>
   )

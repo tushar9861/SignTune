@@ -3,6 +3,7 @@ import { Footer } from "@/components/footer"
 import { HeroSection } from "@/components/home/hero-section"
 import { GlobalSoundMap } from "@/components/home/global-sound-map"
 import { SoundPhilosophyQuote } from "@/components/home/sound-philosophy-quote"
+import { ThisWeekFeatured } from "@/components/home/this-week-featured"
 import { FeaturedAudio } from "@/components/home/featured-audio"
 import { WhySignTune } from "@/components/home/why-signtune"
 import { WhoItsFor } from "@/components/home/who-its-for"
@@ -22,6 +23,7 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <HomeCarousel />
+        <ThisWeekFeatured />
         <GlobalSoundMap />
         <SoundPhilosophyQuote />
         <FeaturedAudio />

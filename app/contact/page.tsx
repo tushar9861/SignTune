@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, CheckCircle } from "lucide-react"
 import { GlobeNetworkIcon } from "@/components/vector-graphics/globe-network-icon"
 import { sendEmailWithPDF } from "@/lib/email-smtp"
+import Image from "next/image"
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -51,6 +52,15 @@ export default function ContactPage() {
       <Header />
       <main>
         <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-transparent to-transparent relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/customer-support-team-with-modern-communication-t.jpg"
+              alt="Contact Us Background"
+              fill
+              className="object-cover opacity-10"
+            />
+          </div>
+
           <div className="absolute top-10 right-20 opacity-15 animate-float">
             <GlobeNetworkIcon className="w-32 h-32" />
           </div>

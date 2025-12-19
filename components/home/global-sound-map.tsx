@@ -1,48 +1,28 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useState, useEffect } from "react"
+import Image from "next/image"
+import { Globe, Zap } from "lucide-react"
 
-interface MapPin {
-  country: string
+interface Region {
+  id: number
+  name: string
+  clients: string
   x: number
   y: number
-  region: "Asia" | "USA" | "Europe" | "India" | "Middle East"
 }
 
 export function GlobalSoundMap() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [activeRegions, setActiveRegions] = useState<number[]>([])
 
-  // Map pins positioned on a stylized world map (percentage-based positioning)
-  const pins: MapPin[] = [
-    // Asia
-    { country: "Japan", x: 85, y: 35, region: "Asia" },
-    { country: "South Korea", x: 84, y: 38, region: "Asia" },
-    { country: "China", x: 75, y: 35, region: "Asia" },
-    { country: "Thailand", x: 73, y: 50, region: "Asia" },
-    { country: "Singapore", x: 74, y: 58, region: "Asia" },
-    { country: "Philippines", x: 82, y: 52, region: "Asia" },
-    { country: "Vietnam", x: 74, y: 48, region: "Asia" },
-    { country: "Indonesia", x: 77, y: 60, region: "Asia" },
-    { country: "Malaysia", x: 74, y: 55, region: "Asia" },
-    { country: "Hong Kong", x: 78, y: 42, region: "Asia" },
-
-    // India
-    { country: "India", x: 67, y: 48, region: "India" },
-
-    // Middle East
-    { country: "UAE", x: 60, y: 48, region: "Middle East" },
-    { country: "Saudi Arabia", x: 58, y: 46, region: "Middle East" },
-    { country: "Qatar", x: 59, y: 47, region: "Middle East" },
-
-    // USA
-    { country: "USA West", x: 15, y: 38, region: "USA" },
-    { country: "USA East", x: 25, y: 40, region: "USA" },
-
-    // Europe
-    { country: "UK", x: 42, y: 28, region: "Europe" },
-    { country: "Germany", x: 47, y: 28, region: "Europe" },
-    { country: "France", x: 45, y: 32, region: "Europe" },
+  const regions = [
+    { id: 1, name: "North America", clients: "500+", x: 15, y: 35 },
+    { id: 2, name: "Europe", clients: "800+", x: 45, y: 30 },
+    { id: 3, name: "Middle East", clients: "600+", x: 58, y: 45 },
+    { id: 4, name: "India", clients: "1200+", x: 67, y: 48 },
+    { id: 5, name: "Southeast Asia", clients: "900+", x: 75, y: 52 },
+    { id: 6, name: "East Asia", clients: "700+", x: 82, y: 38 },
   ]
 
   useEffect(() => {
@@ -50,6 +30,11 @@ export function GlobalSoundMap() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
+          regions.forEach((region, index) => {
+            setTimeout(() => {
+              setActiveRegions((prev) => [...prev, region.id])
+            }, index * 300)
+          })
         }
       },
       { threshold: 0.2 },
@@ -61,134 +46,6 @@ export function GlobalSoundMap() {
     return () => observer.disconnect()
   }, [])
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas || !isVisible) return
-
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    const dpr = window.devicePixelRatio || 1
-    const rect = canvas.getBoundingClientRect()
-
-    canvas.width = rect.width * dpr
-    canvas.height = rect.height * dpr
-    ctx.scale(dpr, dpr)
-
-    const w = rect.width
-    const h = rect.height
-
-    let animationFrame: number
-    const pulses: Array<{ x: number; y: number; radius: number; alpha: number }> = []
-
-    pins.forEach((pin, index) => {
-      setTimeout(() => {
-        pulses.push({
-          x: (pin.x / 100) * w,
-          y: (pin.y / 100) * h,
-          radius: 0,
-          alpha: 1,
-        })
-      }, index * 100)
-    })
-
-    function animate() {
-      if (!ctx) return
-      ctx.clearRect(0, 0, w, h)
-
-      // Draw map base (simplified continents with vector paths)
-      ctx.strokeStyle = "rgba(59, 130, 246, 0.15)"
-      ctx.lineWidth = 1
-      ctx.fillStyle = "rgba(14, 22, 40, 0.6)"
-
-      // Simplified Asia
-      ctx.beginPath()
-      ctx.moveTo(w * 0.6, h * 0.3)
-      ctx.quadraticCurveTo(w * 0.75, h * 0.25, w * 0.85, h * 0.35)
-      ctx.lineTo(w * 0.88, h * 0.55)
-      ctx.quadraticCurveTo(w * 0.8, h * 0.65, w * 0.72, h * 0.58)
-      ctx.lineTo(w * 0.65, h * 0.5)
-      ctx.closePath()
-      ctx.fill()
-      ctx.stroke()
-
-      // Simplified Europe
-      ctx.beginPath()
-      ctx.moveTo(w * 0.4, h * 0.25)
-      ctx.quadraticCurveTo(w * 0.48, h * 0.22, w * 0.52, h * 0.28)
-      ctx.lineTo(w * 0.5, h * 0.35)
-      ctx.quadraticCurveTo(w * 0.45, h * 0.38, w * 0.42, h * 0.32)
-      ctx.closePath()
-      ctx.fill()
-      ctx.stroke()
-
-      // Simplified Americas
-      ctx.beginPath()
-      ctx.moveTo(w * 0.12, h * 0.35)
-      ctx.quadraticCurveTo(w * 0.15, h * 0.3, w * 0.2, h * 0.32)
-      ctx.lineTo(w * 0.25, h * 0.45)
-      ctx.quadraticCurveTo(w * 0.22, h * 0.55, w * 0.18, h * 0.6)
-      ctx.lineTo(w * 0.14, h * 0.5)
-      ctx.closePath()
-      ctx.fill()
-      ctx.stroke()
-
-      // Draw and animate pulses
-      pulses.forEach((pulse) => {
-        pulse.radius += 1.5
-        pulse.alpha -= 0.008
-
-        if (pulse.alpha > 0) {
-          // Outer ripple
-          ctx.beginPath()
-          ctx.arc(pulse.x, pulse.y, pulse.radius, 0, Math.PI * 2)
-          ctx.strokeStyle = `rgba(34, 211, 238, ${pulse.alpha * 0.6})`
-          ctx.lineWidth = 2
-          ctx.stroke()
-
-          // Inner glow
-          const gradient = ctx.createRadialGradient(pulse.x, pulse.y, 0, pulse.x, pulse.y, pulse.radius * 0.5)
-          gradient.addColorStop(0, `rgba(34, 211, 238, ${pulse.alpha * 0.3})`)
-          gradient.addColorStop(1, `rgba(34, 211, 238, 0)`)
-          ctx.fillStyle = gradient
-          ctx.fill()
-        } else {
-          pulse.radius = 0
-          pulse.alpha = 1
-        }
-      })
-
-      // Draw pins
-      pins.forEach((pin) => {
-        const x = (pin.x / 100) * w
-        const y = (pin.y / 100) * h
-
-        // Pin glow
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, 8)
-        gradient.addColorStop(0, "rgba(34, 211, 238, 0.8)")
-        gradient.addColorStop(1, "rgba(34, 211, 238, 0)")
-        ctx.fillStyle = gradient
-        ctx.beginPath()
-        ctx.arc(x, y, 8, 0, Math.PI * 2)
-        ctx.fill()
-
-        // Pin dot
-        ctx.fillStyle = "#22d3ee"
-        ctx.beginPath()
-        ctx.arc(x, y, 3, 0, Math.PI * 2)
-        ctx.fill()
-      })
-
-      animationFrame = requestAnimationFrame(animate)
-    }
-
-    animate()
-
-    return () => {
-      if (animationFrame) cancelAnimationFrame(animationFrame)
-    }
-  }, [isVisible])
-
   return (
     <section
       id="global-sound-map"
@@ -196,49 +53,112 @@ export function GlobalSoundMap() {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">Global Sound Identity</h2>
+          <div className="text-center mb-12 animate-fade-in-up">
+            <div className="inline-flex items-center gap-2 bg-primary/20 border border-primary/30 rounded-full px-4 py-2 mb-6">
+              <Globe className="w-4 h-4 text-primary animate-spin-slow" />
+              <span className="text-sm font-medium text-primary">Global Reach</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">Serving Clients Across 6 Continents</h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              SignTune reaches across continents, creating unique sound signatures for clients worldwide
+              SignTune creates unique sound signatures for clients worldwide, from corporate giants to individuals
             </p>
           </div>
 
-          {/* Map Canvas */}
           <div className="relative">
-            <canvas
-              ref={canvasRef}
-              className="w-full h-[400px] md:h-[500px] rounded-2xl bg-gradient-to-br from-[#0B1220] to-[#0E1628] border border-primary/20 shadow-2xl"
-            />
+            <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden border border-primary/20 shadow-2xl bg-gradient-to-br from-[#0B1220] to-[#0E1628]">
+              <Image src="/world-map-dark-blue-theme-with-glowing-continents.jpg" alt="Global Map" fill className="object-cover opacity-60" />
 
-            {/* Map Legend */}
-            <div className="absolute bottom-4 left-4 bg-background/80 backdrop-blur-sm border border-border rounded-lg p-3 text-xs space-y-1">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-muted-foreground">Active Regions</span>
+              {/* Animated Pins */}
+              {regions.map((region) => (
+                <div
+                  key={region.id}
+                  className={`absolute transition-all duration-500 ${
+                    activeRegions.includes(region.id) ? "opacity-100 scale-100" : "opacity-0 scale-0"
+                  }`}
+                  style={{ left: `${region.x}%`, top: `${region.y}%` }}
+                >
+                  <div className="relative group cursor-pointer">
+                    {/* Pulsing Circle */}
+                    <div className="absolute inset-0 -m-4">
+                      <div className="w-8 h-8 rounded-full bg-accent/30 animate-ping" />
+                    </div>
+
+                    {/* Pin Icon */}
+                    {/* MapPin icon is imported from lucide-react, but not used here. */}
+                    {/* Placeholder for MapPin icon if needed. */}
+                    {/* <MapPin className="w-8 h-8 text-accent drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] animate-bounce" /> */}
+
+                    {/* Hover Tooltip */}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      <div className="bg-background/95 backdrop-blur-sm border border-accent/30 rounded-lg px-3 py-2 shadow-xl whitespace-nowrap">
+                        <p className="text-sm font-bold text-foreground">{region.name}</p>
+                        <p className="text-xs text-accent">{region.clients} Clients</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Animated Connection Lines */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                <defs>
+                  <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="rgba(34, 211, 238, 0)" />
+                    <stop offset="50%" stopColor="rgba(34, 211, 238, 0.6)" />
+                    <stop offset="100%" stopColor="rgba(34, 211, 238, 0)" />
+                  </linearGradient>
+                </defs>
+                {regions.slice(0, -1).map((region, index) => {
+                  const nextRegion = regions[index + 1]
+                  return (
+                    <line
+                      key={`line-${region.id}`}
+                      x1={`${region.x}%`}
+                      y1={`${region.y}%`}
+                      x2={`${nextRegion.x}%`}
+                      y2={`${nextRegion.y}%`}
+                      stroke="url(#lineGradient)"
+                      strokeWidth="2"
+                      className={`transition-opacity duration-1000 ${
+                        activeRegions.includes(region.id) && activeRegions.includes(nextRegion.id)
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                    />
+                  )
+                })}
+              </svg>
+            </div>
+
+            {/* Stats Overlay */}
+            <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-2xl">
+              <div className="flex items-center gap-3">
+                <Zap className="w-5 h-5 text-accent animate-pulse" />
+                <div>
+                  <p className="text-2xl font-bold text-foreground">4,800+</p>
+                  <p className="text-xs text-muted-foreground">Global Clients</p>
+                </div>
               </div>
-              <div className="text-[10px] text-muted-foreground/70 mt-2">{pins.length}+ Countries Served</div>
             </div>
           </div>
 
-          {/* Stats */}
+          {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-            <div className="text-center p-4 bg-card border border-border rounded-lg">
-              <div className="text-2xl md:text-3xl font-bold text-accent mb-1">15+</div>
-              <div className="text-sm text-muted-foreground">Asian Markets</div>
-            </div>
-            <div className="text-center p-4 bg-card border border-border rounded-lg">
-              <div className="text-2xl md:text-3xl font-bold text-accent mb-1">3</div>
-              <div className="text-sm text-muted-foreground">Continents</div>
-            </div>
-            <div className="text-center p-4 bg-card border border-border rounded-lg">
-              <div className="text-2xl md:text-3xl font-bold text-accent mb-1">24/7</div>
-              <div className="text-sm text-muted-foreground">Global Service</div>
-            </div>
-            <div className="text-center p-4 bg-card border border-border rounded-lg">
-              <div className="text-2xl md:text-3xl font-bold text-accent mb-1">100%</div>
-              <div className="text-sm text-muted-foreground">Original Audio</div>
-            </div>
+            {[
+              { label: "Countries Served", value: "25+" },
+              { label: "Languages", value: "15+" },
+              { label: "Time Zones", value: "24/7" },
+              { label: "Satisfaction", value: "98%" },
+            ].map((stat, index) => (
+              <div
+                key={index}
+                className="text-center p-6 bg-card border border-border rounded-xl hover:border-accent/50 transition-all duration-300 hover:shadow-xl hover:shadow-accent/10 animate-fade-in-up"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="text-3xl md:text-4xl font-bold text-accent mb-2">{stat.value}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

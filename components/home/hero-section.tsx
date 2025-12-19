@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Music, Sparkles, Play } from "lucide-react"
 import { ComingSoonModal } from "@/components/coming-soon-modal"
+import Image from "next/image"
 
 export function HeroSection() {
   const [showModal, setShowModal] = useState(false)
@@ -11,6 +12,17 @@ export function HeroSection() {
   return (
     <>
       <section className="relative overflow-hidden py-24 md:py-40">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/professional-music-studio-with-sound-mixing-equipm.jpg"
+            alt="Music Studio Background"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-background/95" />
+        </div>
+
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent-light/5 to-transparent" />
         <div className="absolute top-20 right-10 w-72 h-72 bg-accent-light/10 rounded-full blur-3xl animate-float" />
         <div
