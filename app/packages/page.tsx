@@ -1,17 +1,17 @@
+"use client"
+
+import { useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Check, Star } from "lucide-react"
 import { MusicNoteIcon } from "@/components/vector-graphics/music-note-icon"
-import Link from "next/link"
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Packages - The Sign Tune",
-  description: "Choose the perfect package for your customized caller tune",
-}
+import { ComingSoonModal } from "@/components/coming-soon-modal"
+import { MusicalInstrumentArt } from "@/components/vector-art/musical-instrument-art"
 
 export default function PackagesPage() {
+  const [showModal, setShowModal] = useState(false)
+
   const packages = [
     {
       name: "Basic Name Tune",
@@ -86,6 +86,10 @@ export default function PackagesPage() {
             <MusicNoteIcon className="w-32 h-32" />
           </div>
 
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none">
+            <MusicalInstrumentArt />
+          </div>
+
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 animate-fade-in-up">
@@ -112,7 +116,6 @@ export default function PackagesPage() {
                   }`}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  {/* Popular Badge */}
                   {pkg.popular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-sm font-semibold rounded-full flex items-center gap-1 animate-pulse-glow">
                       <Star className="h-4 w-4" />
@@ -120,7 +123,6 @@ export default function PackagesPage() {
                     </div>
                   )}
 
-                  {/* Package Info */}
                   <div className="mb-6">
                     <h3 className="text-xl font-bold text-foreground mb-2">{pkg.name}</h3>
                     <div className="mb-3">
@@ -129,7 +131,6 @@ export default function PackagesPage() {
                     <p className="text-sm text-muted-foreground">{pkg.description}</p>
                   </div>
 
-                  {/* Features */}
                   <ul className="space-y-3 mb-6 flex-1">
                     {pkg.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2">
@@ -139,19 +140,19 @@ export default function PackagesPage() {
                     ))}
                   </ul>
 
-                  {/* CTA Button */}
-                  <Link href="/book-your-tune" className="w-full">
-                    <Button className="w-full" variant={pkg.popular ? "default" : "outline"}>
-                      Select Package
-                    </Button>
-                  </Link>
+                  <Button
+                    className="w-full"
+                    variant={pkg.popular ? "default" : "outline"}
+                    onClick={() => setShowModal(true)}
+                  >
+                    Select Package
+                  </Button>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Additional Info */}
         <section className="py-12 md:py-16 bg-card/30">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
@@ -184,6 +185,8 @@ export default function PackagesPage() {
         </section>
       </main>
       <Footer />
+
+      <ComingSoonModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>
   )
 }

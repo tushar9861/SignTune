@@ -280,6 +280,39 @@
   }
 }
 
+/* Add new keyframes for floating music elements and wave flow */
+@keyframes floatMusic {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-600px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes waveFlow {
+  0% {
+    transform: translateX(-50px);
+  }
+  100% {
+    transform: translateX(50px);
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-waveform {
   animation: waveform 0.8s ease-in-out infinite;
 }
@@ -332,6 +365,19 @@
 
 .animate-rotate-glow {
   animation: rotateGlow 20s linear infinite;
+}
+
+/* Add animation classes for modal and music particles */
+.animate-float-music {
+  animation: floatMusic 8s linear infinite;
+}
+
+.animate-wave-flow {
+  animation: waveFlow 3s ease-in-out infinite alternate;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 8s linear infinite;
 }
 
 /* Added delay utilities for staggered animations */
