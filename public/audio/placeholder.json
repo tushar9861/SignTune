@@ -1,0 +1,18 @@
+{
+  "note": "Add your audio files to this directory",
+  "required_files": [
+    "professional-greeting.mp3",
+    "calm-composed.mp3",
+    "energetic-vibe.mp3",
+    "spiritual-harmony.mp3",
+    "corporate-excellence.mp3",
+    "festive-celebration.mp3",
+    "modern-minimalist.mp3"
+  ],
+  "specifications": {
+    "duration": "25 seconds or less",
+    "format": "MP3",
+    "bitrate": "192kbps or higher",
+    "copyright": "No copyrighted music allowed"
+  }
+}
