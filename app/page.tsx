@@ -11,6 +11,9 @@ import { CTASection } from "@/components/home/cta-section"
 import { CustomTuneForm } from "@/components/home/custom-tune-form"
 import { FloatingContact } from "@/components/floating-contact"
 import { TryMySoundPanel } from "@/components/try-my-sound-panel"
+import { HomeCarousel } from "@/components/home/home-carousel"
+import { WhatsAppCTASection } from "@/components/home/whatsapp-cta-section"
+import { TestimonialSection } from "@/components/home/testimonial-section"
 
 export default function HomePage() {
   return (
@@ -18,13 +21,16 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
+        <HomeCarousel />
         <GlobalSoundMap />
         <SoundPhilosophyQuote />
         <FeaturedAudio />
         <TryMySoundPanel />
         <WhySignTune />
+        <WhatsAppCTASection />
         <WhoItsFor />
         <HowItWorksPreview />
+        <TestimonialSection />
         <CTASection />
         <CustomTuneForm />
       </main>

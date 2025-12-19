@@ -9,11 +9,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { sendEmailWithPDF } from "@/lib/email-smtp"
-import { CheckCircle, Package } from "lucide-react"
+import { sendToWhatsApp } from "@/lib/whatsapp"
+import { CheckCircle, Package, MessageCircle } from "lucide-react"
 
 export default function BookYourTunePage() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState({
     fullName: "",
@@ -33,22 +32,18 @@ export default function BookYourTunePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
 
-    try {
-      await sendEmailWithPDF({
-        to: "dev.signtune@gmail.com",
-        subject: "New Caller Tune Order",
-        data: formData,
-        source: "Book Your Tune",
-      })
-      setIsSubmitted(true)
-    } catch (error) {
-      console.error("[v0] Email sending error:", error)
-      alert("There was an error sending your order. Please try again.")
-    } finally {
-      setIsSubmitting(false)
-    }
+    const whatsappData = await sendToWhatsApp({
+      name: formData.fullName,
+      email: formData.email,
+      phone: formData.whatsapp,
+      package: formData.packageType,
+      category: `${formData.mood} - ${formData.occasion}`,
+      message: `Language: ${formData.language}\nName/Brand: ${formData.nameOrBrand}\nSpecial Instructions: ${formData.specialInstructions}`,
+    })
+
+    window.open(whatsappData.url, "_blank")
+    setIsSubmitted(true)
   }
 
   if (isSubmitted) {
@@ -60,14 +55,13 @@ export default function BookYourTunePage() {
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center">
                 <div className="flex justify-center mb-6">
-                  <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
-                    <CheckCircle className="h-10 w-10 text-primary" />
+                  <div className="h-20 w-20 rounded-full bg-[#25D366]/10 flex items-center justify-center animate-scale-in">
+                    <CheckCircle className="h-10 w-10 text-[#25D366]" />
                   </div>
                 </div>
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Thank You!</h1>
+                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Opening WhatsApp...</h1>
                 <p className="text-lg text-muted-foreground mb-8">
-                  Thank you for your order for customized caller tunes from SignTune. You will receive a specially
-                  composed tune on your email.
+                  Your order details have been prepared. Complete your booking on WhatsApp for instant confirmation!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button onClick={() => setIsSubmitted(false)} variant="outline">
@@ -94,7 +88,7 @@ export default function BookYourTunePage() {
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Book Your Tune</h1>
               <p className="text-lg text-muted-foreground">
-                Fill out the form below to order your personalized caller tune. We'll deliver it within 24-48 hours.
+                Fill out the form below and we'll connect you on WhatsApp to complete your order
               </p>
             </div>
           </div>
@@ -248,11 +242,12 @@ export default function BookYourTunePage() {
 
                 {/* Submit Button */}
                 <div className="pt-4">
-                  <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting ? "Processing..." : "Proceed to Pay"}
+                  <Button type="submit" size="lg" className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white">
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    Continue on WhatsApp
                   </Button>
                   <p className="text-sm text-muted-foreground text-center mt-3">
-                    Payment details will be sent to your email after order confirmation
+                    Complete your order securely on WhatsApp with our team
                   </p>
                 </div>
               </form>
