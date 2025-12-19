@@ -37,21 +37,21 @@ A production-ready customized caller tune website with SMTP email notifications 
 
 ### 1. Install Dependencies
 
-```bash
+\`\`\`bash
 npm install
-```
+\`\`\`
 
 ### 2. Configure SMTP Email Service
 
 Add the following environment variables in the **Vars** section (v0) or create a `.env.local` file:
 
-```bash
+\`\`\`bash
 # SMTP Configuration (Required)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
 SMTP_PASS=your-app-password
-```
+\`\`\`
 
 #### Gmail SMTP Setup:
 
@@ -108,9 +108,9 @@ Place your audio files in the `public/audio` directory:
 
 Run the development server:
 
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 Open [http://localhost:3000](http://localhost:3000) to preview the site.
 
@@ -126,10 +126,10 @@ Open [http://localhost:3000](http://localhost:3000) to preview the site.
 
 ### 6. Build for Production
 
-```bash
+\`\`\`bash
 npm run build
 npm start
-```
+\`\`\`
 
 The build creates an optimized production version with:
 - Server Actions enabled
@@ -173,7 +173,7 @@ The build creates an optimized production version with:
 
 ## Project Structure
 
-```
+\`\`\`
 ├── app/
 │   ├── page.tsx                    # Home page
 │   ├── new-collections/            # Collections page
@@ -198,7 +198,7 @@ The build creates an optimized production version with:
 ├── public/
 │   └── audio/                      # Audio files directory
 └── next.config.mjs                 # Next.js configuration
-```
+\`\`\`
 
 ## Email Features
 
@@ -232,11 +232,11 @@ The build creates an optimized production version with:
 
 Update the `to` parameter in all form submissions:
 
-```tsx
+\`\`\`tsx
 await sendEmailWithPDF({
   to: "your-new-email@domain.com",
 })
-```
+\`\`\`
 
 Files to update:
 - `components/home/custom-tune-form.tsx`
@@ -247,14 +247,14 @@ Files to update:
 
 Edit `app/globals.css`:
 
-```css
+\`\`\`css
 :root {
   --background: #0b1220;      /* Deep navy blue */
   --primary: #3b82f6;         /* Modern blue accent */
   --accent: #06b6d4;          /* Cyan accent */
   /* ... other colors */
 }
-```
+\`\`\`
 
 ### Modify Package Pricing
 
@@ -271,13 +271,13 @@ When ready for live payments:
 
 ## Environment Variables
 
-```bash
+\`\`\`bash
 # SMTP Configuration (Required)
 SMTP_HOST=smtp.gmail.com           # Your SMTP host
 SMTP_PORT=587                       # SMTP port (587 for TLS, 465 for SSL)
 SMTP_USER=your-email@gmail.com     # Your email address
 SMTP_PASS=your-app-password        # Your SMTP password/app password
-```
+\`\`\`
 
 ## Testing Checklist
 
